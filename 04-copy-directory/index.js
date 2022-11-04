@@ -29,8 +29,8 @@ async function deleteDir(pathTo){
              let pathFile = path.join(pathTo,file.name)
              if(file.isFile()){
                  try{
-                   await fsPromise.unlink(pathFile)
-                  }catch(err){console.log(err);}
+                    await fsPromise.unlink(pathFile)
+                 }catch(err){console.log(err);}
              }
              if(file.isDirectory()){
                  let done = await deleteDir(pathFile)

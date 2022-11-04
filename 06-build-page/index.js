@@ -8,41 +8,41 @@ let filePathAssets = path.join(__dirname,"./assets")
 let copyAssets = path.join(filePathDist,'./assets')
 //проверка наличия директории
 fs.access(filePathDist,err=>{
-    if(err){
-        createDir(filePathDist)
-        readDirCss()
-        copyDir(filePathAssets,filePathDist)
-        console.log('Успешно создано');
-    }else{
-        deleteDir(filePathDist)
-        .then(data=>{readDirCss();copyDir(filePathAssets,filePathDist)})
-        console.log('Успешно обновнено');
-    }
+  if(err){
+    createDir(filePathDist)
+    readDirCss()
+    copyDir(filePathAssets,filePathDist)
+    console.log('Успешно создано');
+  }else{
+    deleteDir(filePathDist)
+    .then(data=>{readDirCss();copyDir(filePathAssets,filePathDist)})
+    console.log('Успешно обновнено');
+  }
 })
 //Создание директории
 async function createDir(dirPath){
-    let done = await fsPromise.mkdir(dirPath,{recursive:true})
-    return done
+  let done = await fsPromise.mkdir(dirPath,{recursive:true})
+  return done
 }
 //Очистка директории
 async function deleteDir(pathTo){
-   let files = await fsPromise.readdir(pathTo,{withFileTypes: true})
-        files.forEach(async file => {
-            let pathFile = path.join(pathTo,file.name)
-            if(file.isFile()){
-                try{
-                  await fsPromise.unlink(pathFile)
-                 }catch(err){console.log(err);}
-            }
-            if(file.isDirectory()){
-                let done = await deleteDir(pathFile)
-                if(done.length==0){
-                    fsPromise.rmdir(pathFile)
-                }
-            }  
-        })
-        return files
-    }
+  let files = await fsPromise.readdir(pathTo,{withFileTypes: true})
+  files.forEach(async file => {
+    let pathFile = path.join(pathTo,file.name)
+      if(file.isFile()){
+        try{
+          await fsPromise.unlink(pathFile)
+        }catch(err){console.log(err);}
+      }
+      if(file.isDirectory()){
+        let done = await deleteDir(pathFile)
+        if(done.length==0){
+          fsPromise.rmdir(pathFile)
+        }
+      }  
+  })
+  return files
+}
 //Копирование папки Assets
 function copyDir(dirPath,copyDirPath){
   fs.readdir(dirPath,{withFileTypes: true},(err,data)=>{
@@ -67,7 +67,7 @@ function copyDir(dirPath,copyDirPath){
 //Чтение папки со стилями
 async function readDirCss(){
  let data = await fsPromise.readdir(filePathStyles,{withFileTypes: true})
-                   .catch(err=>console.log('Что то пошло не так'))
+ .catch(err=>console.log('Что то пошло не так'))
  data.forEach(item=>{
    if(item.isFile()){
      let newPath = path.join(filePathStyles,item.name)
@@ -98,7 +98,6 @@ function readDirCOmponents(){
  })
 }
 readDirCOmponents()
-    
 //создание копии исходного HTML файла
 let file
 async function create(){
