@@ -7,10 +7,10 @@ fs.readdir(filePath,{withFileTypes: true},(err,data)=>{
     data.forEach(item=>{
       if(item.isFile()){
         let name = item.name.split('.')[0]
-        let extension = item.name.split('.')[1]
+        let ext = path.extname(item.name)
         let index =  path.resolve(__dirname,`./secret-folder/${item.name}`)
         fs.stat(index,(err,stats)=>{
-          console.log('Имя файла: ' + name + '; Расширение : '+ extension + '; Размер : ' + stats.size +' байт;');
+          console.log('Имя файла: ' + name + '; Расширение : '+ ext + '; Размер : ' + stats.size +' байт;');
         })
       }
     })
